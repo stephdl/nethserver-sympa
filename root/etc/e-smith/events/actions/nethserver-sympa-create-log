@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+if [[ ! -f '/var/log/sympa.log' ]]; then
+  /usr/bin/touch /var/log/sympa.log
+  /usr/bin/chmod 640 /var/log/sympa.log
+  /usr/bin/systemctl restart rsyslog
+fi

@@ -1,0 +1,43 @@
+#!/usr/bin/perl -w
+
+#
+# 
+# This script is part of NethServer.
+# 
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+# 
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use strict;
+use NethServer::Password;
+
+
+##test if the mysql db is created, if not then the user and the mysql db are created
+     if ( ! -d '/var/lib/mysql/sympa') {
+my $password = NethServer::Password::store('sympa') || die('Could not generate sympa password!');
+
+my $commands = join("\n", 
+	      "GRANT ALL PRIVILEGES ON `sympa`.* TO 'sympa'\@'localhost' IDENTIFIED BY '$password';",
+	      "FLUSH PRIVILEGES;",
+	      "CREATE DATABASE IF NOT EXISTS sympa DEFAULT CHARACTER SET = 'utf8';"
+     ) . "\n";
+
+print $commands;
+
+open(FH, '|-', '/usr/bin/mysql -B -f') || die("[ERROR] Could not connect to mysql");
+print FH $commands;     
+close(FH);
+
+system ('/usr/sbin/sympa.pl --health_check');
+exit (0);
+}

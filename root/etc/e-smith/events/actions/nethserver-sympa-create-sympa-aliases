@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+if [[ ! -f '/var/lib/sympa/sympa_aliases' ]]; then
+  /usr/bin/touch /var/lib/sympa/sympa_aliases
+fi
+/usr/bin/chmod 640 /var/lib/sympa/sympa_aliases
+/usr/bin/chown sympa:sympa /var/lib/sympa/sympa_aliases
+
+/usr/sbin/postalias hash:/etc/sympa/aliases.sympa.postfix
+/usr/sbin/sympa_newaliases.pl
