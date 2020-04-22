@@ -1,0 +1,2 @@
+# With sympa-httpd, uncomment folowing line.
+FCGI_OPTS="-M 0600 -U apache"
