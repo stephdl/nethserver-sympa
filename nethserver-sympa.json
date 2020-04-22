@@ -1,0 +1,26 @@
+{
+  "id": "nethserver-sympa",
+  "name": "sympa",
+  "summary": "Provide the mailling list sympa",
+  "description": "Provide Mailing list management",
+  "url": "",
+  "homepage": "https://github.com/stephdl/nethserver-sympa",
+  "provides": ["nethserver-sympa"],
+  "release": {
+    "version": "_RELEASE_"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/stephdl/dev/issues"
+  },
+  "author": {
+    "name": "Stephane de Labrusse",
+    "url": "https://github.com/stephdl/nethserver-sympa",
+    "email": "stephdl@de-labrusse.fr"
+  },
+  "infoapi": {
+    "path": "nethserver-sympa/read"
+  },
+  "icon": "logo.png",
+  "external": true
+}
