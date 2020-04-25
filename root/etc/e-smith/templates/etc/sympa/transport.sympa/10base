@@ -1,0 +1,18 @@
+{
+use esmith::DomainsDB;
+
+foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+  $OUT .= qq(
+
+#
+# maillinglist for $_
+#
+sympa\@$_          sympa:sympa\@$_
+listmaster\@$_     sympa:listmaster\@$_
+bounce\@$_         sympabounce:sympa\@$_
+abuse-feedback-report\@$_  sympabounce:sympa\@$_
+
+  );
+
+}
+}
