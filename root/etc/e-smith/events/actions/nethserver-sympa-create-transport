@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+if [[ ! -f '/etc/sympa/sympa_transport' ]]; then
+  /usr/bin/touch /etc/sympa/sympa_transport
+  /usr/sbin/sympa_newaliases.pl
+fi
+/usr/bin/chmod 640 /etc/sympa/sympa_transport
+/usr/bin/chown sympa:sympa /etc/sympa/sympa_transport

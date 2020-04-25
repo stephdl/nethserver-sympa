@@ -1,0 +1,10 @@
+ #!/usr/bin/perl
+
+use strict;
+use warnings;
+use File::Path;
+
+my $event = shift;
+my $name = shift;
+
+rmtree "/etc/sympa/$name";

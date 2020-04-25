@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+/usr/sbin/postmap hash:/etc/sympa/transport.sympa
+/usr/sbin/postmap hash:/etc/sympa/virtual.sympa

@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use esmith::DomainsDB;
+
+foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+    mkdir "/etc/sympa/$_", 755;
+    mkdir "/var/lib/sympa/list_data/$_", 750;
+    open(my $fh, '>', "/etc/sympa/$_/robot.conf");
+    print $fh "wwsympa_url https://$_/sympa\n";
+    close $fh;
+
+    my @files = glob ("/etc/sympa/$_");
+    my ($uid,$gid) = 'sympa';
+    chown $uid, $gid, @files;
+}
