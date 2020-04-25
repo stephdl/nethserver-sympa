@@ -1,0 +1,5 @@
+
+sympa   unix    -       n       n       -       -       pipe
+  flags=hqRu user=sympa argv=/usr/libexec/sympa/queue \$\{nexthop\}
+sympabounce unix -      n       n       -       -       pipe
+  flags=hqRu user=sympa argv=/usr/libexec/sympa/bouncequeue \$\{nexthop\}
