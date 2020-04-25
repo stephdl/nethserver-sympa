@@ -54,7 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
-%config(noreplace) /etc/sympa/list_aliases.tt2
+#%config(noreplace) /etc/sympa/list_aliases.tt2
 ￼
 %changelog
 * Tue Apr 21 2020 stephane de Labrusse <stephdl@de-labrusse.fr>
