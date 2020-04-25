@@ -1,0 +1,16 @@
+{
+use esmith::DomainsDB;
+
+foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+  $OUT .= qq(
+
+#
+# maillinglist for $_
+#
+sympa-request\@$_  postmaster\@localhost
+sympa-owner\@$_    postmaster\@localhost
+
+  );
+
+}
+}
