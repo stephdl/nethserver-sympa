@@ -16,14 +16,20 @@ foreach  (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
 
     mkdir "/etc/sympa/$name";
     mkdir "/var/lib/sympa/list_data/$name";
+    mkdir "/var/lib/sympa/list_data/$name/scenari";
 
     open(my $fh, '>', "/etc/sympa/$name/robot.conf");
     print $fh "wwsympa_url https://$name/sympa\n";
     print $fh "listmaster $listmaster\n";
     print $fh "lang $lang\n";
     print $fh "\n";
-
     close $fh;
+
+    open(my $f, '>', "/etc/sympa/$name/scenari/create_list.public_listmaster");
+    print $f "title.gettext only listmaster can request a list
+
+is_listmaster([sender])   md5,smime -> do_it\n";
+    close $f;
 
     system ("/usr/bin/chown sympa:sympa -R /etc/sympa/$name");
     system ("/usr/bin/chmod 755 /etc/sympa/$name");
