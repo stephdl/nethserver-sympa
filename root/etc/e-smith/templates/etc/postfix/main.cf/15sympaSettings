@@ -1,9 +1,0 @@
-
-# TODO
-# We overwrite the nethserver valus but we have a warning 
-# warning: do not list domain example.com in BOTH mydestination 
-# and virtual_mailbox_domains
-
-mydestination = {$DomainName}
-alias_database = hash:/etc/aliases, hash:/etc/sympa/aliases.sympa.postfix
-alias_maps = hash:/etc/aliases,hash:/etc/sympa/aliases.sympa.postfix,hash:/var/lib/sympa/sympa_aliases
