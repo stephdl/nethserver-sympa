@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use esmith::DomainsDB;
+
+foreach  (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+
+    my $name = $_->key;
+    my $relay = $_->prop('TransportType') || '';
+    my $sympa = $_->prop('SympaMaillingList') || '';
+    next unless ($relay eq 'LocalDelivery');
+    next unless ($sympa eq 'enabled');
+
+    mkdir "/etc/sympa/$name";
+    mkdir "/var/lib/sympa/list_data/$name";
+
+    open(my $fh, '>', "/etc/sympa/$name/robot.conf");
+    print $fh "wwsympa_url https://$name/sympa\n";
+    close $fh;
+
+    system ("/usr/bin/chown sympa:sympa -R /etc/sympa/$name");
+    system ("/usr/bin/chmod 755 /etc/sympa/$name");
+    system ("/usr/bin/chmod 644 /etc/sympa/$name/*");
+    system ("/usr/bin/chown sympa:sympa -R /var/lib/sympa/list_data/$name");
+    system ("/usr/bin/chmod 750 -R /var/lib/sympa/list_data/$name");
+}

@@ -38,6 +38,6 @@ open(FH, '|-', '/usr/bin/mysql -B -f') || die("[ERROR] Could not connect to mysq
 print FH $commands;     
 close(FH);
 
-system ('/usr/sbin/sympa.pl --health_check');
+system ('/usr/sbin/sympa.pl --health_check > /dev/null');
 exit (0);
 }
