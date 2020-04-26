@@ -1,3 +1,4 @@
+
 #
 # 20virtual_domains -- Virtual domains
 #
@@ -20,7 +21,7 @@
     }
     '';
 }
-virtual_mailbox_domains = { $defaultMailboxDomain }, { join(", ", @virtual_alias_domains) }, hash:/etc/sympa/transport.sympa
+virtual_mailbox_domains = { $defaultMailboxDomain }, hash:/etc/sympa/transport.sympa, { join(", ", @virtual_alias_domains) }
 # virtual_alias_domains = ### break sympa maillinglist
 virtual_mailbox_maps = proxy:unix:passwd.byname, hash:/etc/sympa/transport.sympa,  
                        hash:/etc/sympa/sympa_transport,  hash:/etc/sympa/virtual.sympa {
