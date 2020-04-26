@@ -1,0 +1,48 @@
+
+#
+# 20virtual_domains -- Virtual domains
+#
+
+## custom-template nethserver-sympa
+
+{
+    use esmith::DomainsDB;
+
+    @virtual_alias_domains = ();
+
+    $defaultMailboxDomain = $domainName;
+
+    foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+        if(($_->prop('TransportType') || '')  eq 'LocalDelivery' && $_->key ne $domainName) {
+            push @virtual_alias_domains, $_->key;
+        } elsif($_->key eq $domainName && ($_->prop('TransportType') || '')  eq 'Relay') {
+            $defaultMailboxDomain = '';
+        }
+    }
+    '';
+}
+virtual_mailbox_domains = { $defaultMailboxDomain }, hash:/etc/sympa/transport.sympa, { join(", ", @virtual_alias_domains) }
+# virtual_alias_domains = ### break sympa maillinglist
+virtual_mailbox_maps = proxy:unix:passwd.byname, hash:/etc/sympa/transport.sympa,  
+                       hash:/etc/sympa/sympa_transport,  hash:/etc/sympa/virtual.sympa {
+    use esmith::DomainsDB;
+
+    my $domainRecord = esmith::DomainsDB->open_ro()->get($DomainName);
+    if(defined $domainRecord && defined $domainRecord->prop('UnknownRecipientsActionType')
+       && $domainRecord->prop('UnknownRecipientsActionType') eq 'deliver') {
+        return "static:catchall";
+    }
+    return '';
+}
+virtual_alias_maps = hash:/etc/postfix/virtual, hash:/etc/sympa/virtual.sympa { ($postfix{DynamicGroupAlias} || '') eq 'enabled' ? 'proxy:tcp:127.0.0.1:14444' : '' }
+
+# Message delivery transport that the local(8)
+# delivery agent should use for mailbox delivery:
+mailbox_transport = lmtp:unix:/var/run/dovecot/lmtp
+
+# The default mail delivery transport and next-hop destination
+# for final delivery to domains listed with $virtual_mailbox_domains:
+virtual_transport = lmtp:unix:/var/run/dovecot/lmtp
+
+
+## End custom-template nethserver-sympa

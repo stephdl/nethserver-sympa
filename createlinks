@@ -2,34 +2,66 @@
 
 use esmith::Build::CreateLinks qw(:all);
 
-#--------------------------------------------------
-## example of what is a createlinks
-##--------------------------------------------------
-
-
-#mandatory to create db after installation
 my $event = 'nethserver-sympa-update';
-event_actions ( $event, 'initialize-default-databases' => '00');
-
 event_actions($event, qw(
-            nethserver-sympa-create-database 10
-            nethserver-sympa-create-sympa-aliases 20
-            nethserver-sympa-create-log 30
+        initialize-default-databases 00
+        nethserver-sympa-create-database 10
+        nethserver-sympa-create-domain 20
+        nethserver-sympa-create-transport 30
+        nethserver-sympa-create-log 40
+        nethserver-sympa-postmap 50
 ));
 #expand sympas following one event
 event_templates($event, qw(
-                /etc/httpd/conf.d/default-virtualhost.inc
-                /etc/httpd/conf.d/sympa.conf
-                /etc/postfix/main.cf
-                /etc/sympa/aliases.sympa.postfix
-                /etc/sympa/sympa.conf
-                /etc/sysconfig/sympa
-                /etc/rsyslog.d/sympa.conf
+        /etc/httpd/conf.d/default-virtualhost.inc
+        /etc/httpd/conf.d/zzz_sympa.conf
+        /etc/httpd/conf.d/sympa.conf
+        /etc/postfix/main.cf
+        /etc/postfix/master.cf
+        /etc/sympa/sympa.conf
+        /etc/sysconfig/sympa
+        /etc/rsyslog.d/sympa.conf
+        /etc/sympa/transport.sympa
+        /etc/sympa/virtual.sympa
 ));
 #restart services following one event
 event_services($event, qw(
-               httpd restart
-               sympa restart
-               wwsympa restart
-               sympasoap restart
+        httpd restart
+        sympa restart
+        wwsympa restart
+        sympasoap restart
+        postfix restart
+));
+
+# domain-create
+$event = 'domain-create';
+
+event_actions($event, qw(
+        nethserver-sympa-create-domain 10
+        nethserver-sympa-postmap 15
+));
+event_templates($event, qw(
+        /etc/sympa/transport.sympa
+        /etc/sympa/virtual.sympa
+));
+event_services($event, qw(
+        sympa restart
+        wwsympa restart
+        sympasoap restart
+));
+# domain-delete
+$event = 'domain-delete';
+
+event_actions($event, qw(
+        nethserver-sympa-delete-domain 10
+        nethserver-sympa-postmap 15
+));
+event_templates($event, qw(
+        /etc/sympa/transport.sympa
+        /etc/sympa/virtual.sympa
+));
+event_services($event, qw(
+        sympa restart
+        wwsympa restart
+        sympasoap restart
 ));

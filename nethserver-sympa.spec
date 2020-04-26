@@ -1,7 +1,7 @@
 Summary: nethserver-sympa  is a module for the software sympa
 %define name nethserver-sympa
 Name: %{name}
-%define version 0.0.1
+%define version 0.0.2
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -54,7 +54,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
+%config(noreplace) /etc/sympa/list_aliases.tt2
 
 %changelog
+* Sun Apr 26 2020 stephane de Labrusse <stephdl@de-labrusse.fr>
+- Multi domain email available
+
 * Tue Apr 21 2020 stephane de Labrusse <stephdl@de-labrusse.fr>
 - initial

@@ -1,0 +1,9 @@
+
+#
+# 20transport_maps -- Enable the /etc/postfix/transport table
+#
+## Custom-templates nethserver-sympa
+
+transport_maps = hash:/etc/postfix/transport, hash:/etc/sympa/transport.sympa, hash:/etc/sympa/sympa_transport
+
+## End custom-templates nethserver-sympa
