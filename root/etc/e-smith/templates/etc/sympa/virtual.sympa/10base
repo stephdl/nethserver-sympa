@@ -1,0 +1,23 @@
+{
+use esmith::DomainsDB;
+
+foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
+
+  my $name = $_->key;
+  my $relay = $_->prop('TransportType') || '';
+  my $sympa = $_->prop('SympaMaillingList') || '';
+  next unless ($relay eq 'LocalDelivery');
+  next unless ($sympa eq 'enabled');
+
+  $OUT .= qq(
+
+#
+# maillinglist for $name
+#
+sympa-request\@$name  postmaster\@localhost
+sympa-owner\@$name    postmaster\@localhost
+
+  );
+
+}
+}
