@@ -1,1 +1,9 @@
+#
+# sympa log
+#
+
 local2.* /var/log/sympa.log
+if $programname == 'sympa' then /var/log/sympa.log
+if $programname == 'sympasoap' then /var/log/sympa.log
+if $programname == 'wwsympa' then /var/log/sympa.log
+& stop
