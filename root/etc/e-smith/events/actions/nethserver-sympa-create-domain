@@ -20,7 +20,7 @@ foreach  (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
 
     open(my $fh, '>', "/etc/sympa/$name/robot.conf");
     print $fh "wwsympa_url https://$name/sympa\n";
-    print $fh "listmaster $listmaster\n";
+    print $fh "listmaster $listmaster\n" if ($listmaster ne '');
     print $fh "lang $lang\n";
     print $fh "\n";
     close $fh;
