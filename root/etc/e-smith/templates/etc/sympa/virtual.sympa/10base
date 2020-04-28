@@ -5,7 +5,7 @@ foreach (esmith::DomainsDB->open_ro()->get_all_by_prop('type' => 'domain')) {
 
   my $name = $_->key;
   my $relay = $_->prop('TransportType') || '';
-  my $sympa = $_->prop('SympaMaillingList') || '';
+  my $sympa = $_->prop('SympaStatus') || '';
   next unless ($relay eq 'LocalDelivery');
   next unless ($sympa eq 'enabled');
 
