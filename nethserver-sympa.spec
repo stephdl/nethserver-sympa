@@ -55,6 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
 %config(noreplace) /etc/sympa/list_aliases.tt2
+%config(noreplace) %attr(0644,sympa,sympa) /etc/sympa/scenari/create_list.public_listmaster
 
 %changelog
 * Sun Apr 26 2020 stephane de Labrusse <stephdl@de-labrusse.fr>

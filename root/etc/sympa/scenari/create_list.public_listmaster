@@ -1,0 +1,5 @@
+# comment everything if you want to allow every 
+# authenticated user to request a list
+title.gettext only listmaster can request a list
+
+is_listmaster([sender])   md5,smime -> do_it
