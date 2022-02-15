@@ -1,0 +1,6 @@
+#
+# nsapi_nethserver_sympa
+Cmnd_Alias NSAPI_NETHSERVER_SYMPA = \
+     /usr/libexec/nethserver/api/nethserver-sympa/read
+
+Defaults!NSAPI_NETHSERVER_SYMPA !requiretty

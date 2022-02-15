@@ -1,7 +1,7 @@
 Summary: nethserver-sympa  is a module for the software sympa
 %define name nethserver-sympa
 Name: %{name}
-%define version 0.0.4
+%define version 0.0.5
 %define release 2
 Version: %{version}
 Release: %{release}%{?dist}
@@ -62,8 +62,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 %config(noreplace) /etc/sympa/list_aliases.tt2
 %config(noreplace) %attr(0644,sympa,sympa) /etc/sympa/scenari/create_list.public_listmaster
+%attr(0440,root,root) /etc/sudoers.d/50_nsapi_nethserver_sympa
 
 %changelog
+* Tue Feb 15 2022 stephane de Labrusse <stephdl@de-labrusse.fr> 0.0.5
+- Fix the visudo warning 
+
 * Sat Jul 04 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 0.0.4
 - Remove http templates after rpm removal
 
