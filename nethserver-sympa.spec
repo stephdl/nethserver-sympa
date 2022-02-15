@@ -62,6 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 %config(noreplace) /etc/sympa/list_aliases.tt2
 %config(noreplace) %attr(0644,sympa,sympa) /etc/sympa/scenari/create_list.public_listmaster
+%attr(0440,root,root) /etc/sudoers.d/50_nsapi_nethserver_sympa
 
 %changelog
 * Tue Feb 15 2022 stephane de Labrusse <stephdl@de-labrusse.fr> 0.0.5
